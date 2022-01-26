@@ -12,14 +12,27 @@ public class MovementComponent : MonoBehaviour
     [SerializeField]
     float jumpForce = 5.0f;
 
+
+    //Components
     PlayerController playerController;
     Rigidbody rigidbody;
+    Animator animator;
+
+
+
 
     Vector2 inputVector = Vector2.zero;
     Vector3 moveDirection = Vector3.zero;
+
+
+    public readonly int movementXHash = Animator.StringToHash("MovementX");
+    public readonly int movementYHash = Animator.StringToHash("MovementY");
+    public readonly int isJumpingHash = Animator.StringToHash("isJumping");
+    public readonly int isRunningHash = Animator.StringToHash("isRunning");
+
     // Start is called before the first frame update
     void Start()
-    {
+    { animator = GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
         rigidbody = GetComponent<Rigidbody>();
     }
@@ -42,7 +55,8 @@ public class MovementComponent : MonoBehaviour
     {
         inputVector = value.Get<Vector2>();
 
-
+        animator.SetFloat(movementXHash, inputVector.x);
+        animator.SetFloat(movementYHash, inputVector.y);
 
     }
 
@@ -50,7 +64,7 @@ public class MovementComponent : MonoBehaviour
     {
 
         playerController.isRunning = true;
-
+        animator.SetBool(isRunningHash, playerController.isRunning);
     }
 
 
@@ -61,6 +75,7 @@ public class MovementComponent : MonoBehaviour
         
         playerController.isJumping = true;
             rigidbody.AddForce((transform.up + moveDirection) * jumpForce, ForceMode.Impulse);
+        animator.SetBool(isJumpingHash, playerController.isJumping);
     }
     private void OnCollisionEnter(Collision collision)
     {
