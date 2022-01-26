@@ -27,7 +27,7 @@ public class MovementComponent : MonoBehaviour
 
     public readonly int movementXHash = Animator.StringToHash("MovementX");
     public readonly int movementYHash = Animator.StringToHash("MovementY");
-    public readonly int isJumpingHash = Animator.StringToHash("isJumping");
+    public readonly int isJumpingHash = Animator.StringToHash("IsJumping");
     public readonly int isRunningHash = Animator.StringToHash("isRunning");
 
     // Start is called before the first frame update
@@ -41,7 +41,7 @@ public class MovementComponent : MonoBehaviour
     void Update()
     {
 
-     
+        //if (playerController.isJumping) return;
         if (!(inputVector.magnitude > 0)) moveDirection = Vector3.zero;
 
         moveDirection = transform.forward * inputVector.y + transform.right * inputVector.x;
@@ -82,5 +82,6 @@ public class MovementComponent : MonoBehaviour
         if (!collision.gameObject.CompareTag("Ground") && !playerController.isJumping) return;
 
         playerController.isJumping = false;
+        animator.SetBool(isJumpingHash, false);
     }
 }

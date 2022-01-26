@@ -38,7 +38,7 @@ ModelImporter:
       name: Jump
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 0
+      firstFrame: 11.6
       lastFrame: 45
       wrapMode: 0
       orientationOffsetY: 0
