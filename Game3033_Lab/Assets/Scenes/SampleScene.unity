@@ -2128,6 +2128,8 @@ MonoBehaviour:
   walkSpeed: 2
   runsSpeed: 10
   jumpForce: 5
+  followTransform: {fileID: 295576357}
+  aimSensitivity: 0.5
 --- !u!114 &919132148019326198
 MonoBehaviour:
   m_ObjectHideFlags: 0
