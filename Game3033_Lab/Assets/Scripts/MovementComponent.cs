@@ -28,7 +28,8 @@ public class MovementComponent : MonoBehaviour
     public readonly int movementXHash = Animator.StringToHash("MovementX");
     public readonly int movementYHash = Animator.StringToHash("MovementY");
     public readonly int isJumpingHash = Animator.StringToHash("IsJumping");
-    public readonly int isRunningHash = Animator.StringToHash("isRunning");
+    public readonly int isRunningHash = Animator.StringToHash("IsRunning");
+    public readonly int isAimingHash = Animator.StringToHash("IsAiming");
 
     // Start is called before the first frame update
     void Start()
@@ -62,9 +63,18 @@ public class MovementComponent : MonoBehaviour
 
     public void OnRun(InputValue value)
     {
+      
+            playerController.isRunning = value.isPressed;
+            animator.SetBool(isRunningHash, playerController.isRunning);
+       
+    }
 
-        playerController.isRunning = true;
-        animator.SetBool(isRunningHash, playerController.isRunning);
+    public void OnAim(InputValue value)
+    {
+
+        playerController.isAiming = value.isPressed;
+        animator.SetBool(isAimingHash, playerController.isAiming);
+
     }
 
 
