@@ -109,14 +109,7 @@ public class MovementComponent : MonoBehaviour
 
     }
 
-    public void OnReload(InputValue value)
-    {
-
-        playerController.isReloading = value.isPressed;
-        animator.SetBool(isReloadingHash, playerController.isReloading);
-
-
-    }
+   
 
 
     public void OnJump(InputValue value)
