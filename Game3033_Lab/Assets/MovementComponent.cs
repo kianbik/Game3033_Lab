@@ -33,6 +33,7 @@ public class MovementComponent : MonoBehaviour
     public readonly int isRunningHash = Animator.StringToHash("IsRunning");
     public readonly int isAimingHash = Animator.StringToHash("IsAiming");
     public readonly int isReloadingHash = Animator.StringToHash("IsReloading");
+    public readonly int verticalAimHash = Animator.StringToHash("verticalAim");
 
     // Start is called before the first frame update
     void Start()
@@ -47,10 +48,44 @@ public class MovementComponent : MonoBehaviour
         followTransform.transform.rotation *= Quaternion.AngleAxis(lookInput.x * aimSensitivity , Vector3.up);
         followTransform.transform.rotation *= Quaternion.AngleAxis(lookInput.y * aimSensitivity , Vector3.left);
 
+      
+        // Clamp the rotation <- look for a better way using cinemachine
         var angles = followTransform.transform.localEulerAngles;
         angles.z = 0;
 
         var angle = followTransform.transform.localEulerAngles.x;
+
+        if (angle > 180 && angle < 300)
+        {
+            angles.x = 300;
+        }
+        else if (angle < 180 && angle > 70)
+        {
+            angles.x = 70;
+        }
+
+        followTransform.transform.localEulerAngles = angles;
+
+        // Vertical Aim Fix****************************
+        float min = -60;
+        float max = 70.0f;
+        float range = max - min;
+        float offsetToZero = 0 - min;
+        float aimAngle = followTransform.transform.localEulerAngles.x;
+        aimAngle = (aimAngle > 180) ? aimAngle - 360 : aimAngle;
+        float val = (aimAngle + offsetToZero) / (range);
+
+        animator.SetFloat(verticalAimHash, val);
+
+
+
+        transform.rotation = Quaternion.Euler(0, followTransform.transform.rotation.eulerAngles.y, 0);
+
+        
+        followTransform.transform.localEulerAngles = new Vector3(angles.x, 0f, 0f);
+
+
+       
 
         if(angle > 100 && angle < 300)
         {
