@@ -19,6 +19,7 @@ public struct WeaponStats
     public float damage;
     public int ammoSize;
     public int bulletsInClip;
+    public int totalBullets;
     public float fireDelay;
     public float fireRate;
     public float fireDistance;
@@ -34,6 +35,9 @@ public class WeaponComponent : MonoBehaviour
     public bool isReloading;
     protected WeaponHolder weaponHolder;
     protected Camera mainCamera;
+    [SerializeField]
+    protected ParticleSystem firingEffect;
+
 
     // Start is called before the first frame update
     private void Awake()
@@ -52,23 +56,68 @@ public class WeaponComponent : MonoBehaviour
     }
     public virtual void StartFiringWeapon()
     {
-        isFiring = true;
-        if (weaponStats.repeating)
+        if (!isReloading)
         {
-            InvokeRepeating(nameof(FireWeapon), weaponStats.fireDelay, weaponStats.fireRate);
+            isFiring = true;
+            if (weaponStats.repeating)
+            {
+                InvokeRepeating(nameof(FireWeapon), weaponStats.fireDelay, weaponStats.fireRate);
+                firingEffect.Play();
+            }
+            else
+            {
+                FireWeapon();
+                if (!firingEffect.isPlaying)
+                    firingEffect.Play();
+            }
         }
-        else
-            FireWeapon();
     }
     public virtual void StopFiringWeapon()
     {
         isFiring = false;
         CancelInvoke(nameof(FireWeapon));
+        if (firingEffect.isPlaying)
+        {
+            firingEffect.Stop();
+        }
     
     
     }
     protected virtual void FireWeapon()
     {
         weaponStats.bulletsInClip--;
+      
+         
+        
+    }
+    public virtual void StartReloading()
+    {
+        isReloading = true;
+      
+        ReloadWeapon();
+
+    }
+    public virtual void StopReloading()
+    {
+        isReloading = false;
+    }
+
+    protected virtual void ReloadWeapon()
+    {
+        if (firingEffect.isPlaying)
+        {
+            firingEffect.Stop();
+        }
+        int bulletsToReload = weaponStats.ammoSize - weaponStats.totalBullets;
+        if(bulletsToReload< 0)
+        {
+            weaponStats.totalBullets -= ( weaponStats.ammoSize - weaponStats.bulletsInClip);
+            weaponStats.bulletsInClip = weaponStats.ammoSize;
+        }
+        else
+        {
+            weaponStats.bulletsInClip = weaponStats.totalBullets;
+            weaponStats.totalBullets = 0;
+        }
     }
 }

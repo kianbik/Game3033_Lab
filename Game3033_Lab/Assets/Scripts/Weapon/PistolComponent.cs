@@ -17,7 +17,7 @@ public class PistolComponent : WeaponComponent
                 hitlocation = hit.point;
                 Vector3 hitDirection = hit.point - mainCamera.transform.position;
                 Debug.DrawRay(mainCamera.transform.position, hitDirection.normalized * weaponStats.fireDistance, Color.red, 1);
-                Debug.Log("Fire");
+               
             }
         }
     }
