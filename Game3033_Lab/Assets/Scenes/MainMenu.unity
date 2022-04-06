@@ -451,13 +451,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 397286037}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fa03bbeb0deab34e8d38a30a1ca8e7b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2514033bde020734ea3b1bc9bd659de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponText: {fileID: 0}
-  ammoText: {fileID: 0}
-  totalBulletText: {fileID: 0}
-  weaponComponent: {fileID: 0}
 --- !u!1 &659072627
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,7 +744,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1801252930}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 397286042}
+        m_TargetAssemblyTypeName: Buttons, Assembly-CSharp
+        m_MethodName: LoadGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1801252930
 MonoBehaviour:
   m_ObjectHideFlags: 0
