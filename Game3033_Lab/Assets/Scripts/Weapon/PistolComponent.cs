@@ -15,10 +15,17 @@ public class PistolComponent : WeaponComponent
             if(Physics.Raycast(screenRay, out RaycastHit hit, weaponStats.fireDistance, weaponStats.weaponhitLayerMask))
             {
                 hitlocation = hit.point;
+                DealDamage(hit);
                 Vector3 hitDirection = hit.point - mainCamera.transform.position;
                 Debug.DrawRay(mainCamera.transform.position, hitDirection.normalized * weaponStats.fireDistance, Color.red, 1);
                
             }
         }
     }
+    void DealDamage(RaycastHit hitInfo)
+    {
+        IDamageable damageable = hitInfo.collider.GetComponent<IDamageable>();
+        damageable?.TakeDamage(weaponStats.damage);
+    }
+
 }
