@@ -43,7 +43,7 @@ public class GameUIController : MonoBehaviour
 
     public void DisableAllMenus()
     {
-        //GameCanvas.DisableWidget();
+        GameCanvas.DisableWidget();
         //PauseCanvas.DisableWidget();
         InventoryCanvas.DisableWidget();
     }

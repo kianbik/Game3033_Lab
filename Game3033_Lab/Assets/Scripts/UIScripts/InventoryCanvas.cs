@@ -9,11 +9,11 @@ public class InventoryCanvas : GameHUDWidget
 {
     private ItemDisplayPanel ItemDisplayPanel;
     private List<CategorySelectButton> CategoryButtons;
-    private PlayerController PlayerController;
+    private PlayerController playerController;
 
     private void Awake()
     {
-        PlayerController = FindObjectOfType<PlayerController>();
+        playerController = FindObjectOfType<PlayerController>();
         CategoryButtons = GetComponentsInChildren<CategorySelectButton>().ToList();
         ItemDisplayPanel = GetComponentInChildren<ItemDisplayPanel>();
         foreach (CategorySelectButton button in CategoryButtons)
@@ -24,17 +24,17 @@ public class InventoryCanvas : GameHUDWidget
 
     private void OnEnable()
     {
-        if (!PlayerController || !PlayerController.inventory) return;
-        if (PlayerController.inventory.GetItemCount() <= 0) return;
+        if (!playerController || !playerController.inventory) return;
+        if (playerController.inventory.GetItemCount() <= 0) return;
 
-        ItemDisplayPanel.PopulatePanel(PlayerController.inventory.GetItemsOfCategory(ItemCategory.NONE));
+        ItemDisplayPanel.PopulatePanel(playerController.inventory.GetItemsOfCategory(ItemCategory.NONE));
     }
 
     public void SelectCategory(ItemCategory category)
     {
-        if (!PlayerController || !PlayerController.inventory) return;
-        if (PlayerController.inventory.GetItemCount() <= 0) return;
+        if (!playerController || !playerController.inventory) return;
+        if (playerController.inventory.GetItemCount() <= 0) return;
 
-        ItemDisplayPanel.PopulatePanel(PlayerController.inventory.GetItemsOfCategory(category));
+        ItemDisplayPanel.PopulatePanel(playerController.inventory.GetItemsOfCategory(category));
     }
 }

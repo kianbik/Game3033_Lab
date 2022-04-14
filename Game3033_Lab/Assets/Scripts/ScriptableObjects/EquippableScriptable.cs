@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class EquippableScriptable : ItemScript
 {
-    public bool Equipped
+    public bool isEquipped = false;
+    public bool equipped
     {
         get => isEquipped;
         set
@@ -14,14 +15,13 @@ public abstract class EquippableScriptable : ItemScript
         }
     }
 
-    bool isEquipped = false;
 
     public delegate void EquipStatusChange();
     public event EquipStatusChange OnEquipStatusChange;
 
     public override void UseItem(PlayerController playerController)
     {
-        Equipped = !Equipped;
+        isEquipped = !isEquipped;
     }
 
 }

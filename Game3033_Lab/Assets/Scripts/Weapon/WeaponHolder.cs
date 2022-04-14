@@ -9,6 +9,7 @@ public class WeaponHolder : MonoBehaviour
 
     public Sprite Crosshair;
 
+    GameObject spawnedWeapon;
     [SerializeField]
     GameObject weaponSocketLocation;
     [SerializeField]
@@ -20,6 +21,7 @@ public class WeaponHolder : MonoBehaviour
     public PlayerController playerController;
     Animator playerAnimator;
     WeaponComponent equippedWeapon;
+    WeaponInfoUI weaponInfoUI;
     bool firingPressed = false;
     // Start is called before the first frame update
     void Start()
@@ -27,10 +29,10 @@ public class WeaponHolder : MonoBehaviour
         GameObject spawnedWeapon = Instantiate(weaponToSpawn, weaponSocketLocation.transform.position, weaponSocketLocation.transform.rotation, weaponSocketLocation.transform);
         playerController = GetComponent<PlayerController>();
         playerAnimator = GetComponent<Animator>();
-        equippedWeapon = spawnedWeapon.GetComponent<WeaponComponent>();
-        equippedWeapon.Initialize(this);
-        PlayerEvents.InvokeOnWeaponEquipped(equippedWeapon);
-        gripSocketLocation = equippedWeapon.gripLocation;
+        //equippedWeapon = spawnedWeapon.GetComponent<WeaponComponent>();
+        //equippedWeapon.Initalize(this);
+        //PlayerEvents.InvokeOnWeaponEquipped(equippedWeapon);
+        //gripSocketLocation = equippedWeapon.gripLocation;
     }
 
     // Update is called once per frame
@@ -108,5 +110,30 @@ public class WeaponHolder : MonoBehaviour
     {
         playerController.isFiring = false;
         equippedWeapon.StopFiringWeapon();
+    }
+
+    public void EquipWeapon(WeaponScriptable weaponScriptable)
+    {
+        if (!weaponScriptable)
+            return;
+
+        spawnedWeapon = Instantiate(weaponScriptable.itemPrefab, weaponSocketLocation.transform.position, weaponSocketLocation.transform.rotation, weaponSocketLocation.transform);
+        if (!spawnedWeapon)
+            return;
+
+        equippedWeapon = spawnedWeapon.GetComponent<WeaponComponent>();
+
+        if (!equippedWeapon)
+            return;
+
+        equippedWeapon.Initalize(this, weaponScriptable);
+        PlayerEvents.InvokeOnWeaponEquipped(equippedWeapon);
+        gripSocketLocation = equippedWeapon.gripLocation;
+        
+    }
+
+    public void UnEquipWeapon()
+    {
+
     }
 }

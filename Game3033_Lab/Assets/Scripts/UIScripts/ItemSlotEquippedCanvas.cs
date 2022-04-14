@@ -38,7 +38,7 @@ public class ItemSlotEquippedCanvas : MonoBehaviour
 
     private void OnEquipmentChange()
     {
-        EnabledImage.gameObject.SetActive(Equipable.Equipped);
+        EnabledImage.gameObject.SetActive(Equipable.isEquipped);
     }
 
     private void OnDisable()
